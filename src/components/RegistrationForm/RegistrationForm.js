@@ -2,11 +2,32 @@ import React,{useState} from "react";
 import axios from "axios";
 
 import {API_BASE_URL,ACCESS_TOKEN_NAME} from "../../constants/apiConstants";
-import {withRouter} from "react-router-dom";
 import AlertComponent from "../AlertComponent/AlertComponent";
 import banner from "../../banner.png";
 
 import {Card,Row,Col,Image,Form,Button} from "react-bootstrap";
+
+import {
+  useLocation,
+  useNavigate,
+  useParams
+} from "react-router-dom";
+
+function withRouter(Component) {
+  function ComponentWithRouterProp(props) {
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
+    return (
+      <Component
+        {...props}
+        router={{ location, navigate, params }}
+      />
+    );
+  }
+
+  return ComponentWithRouterProp;
+}
 
 function RegistrationForm(props){
     const [state,setState]=useState({

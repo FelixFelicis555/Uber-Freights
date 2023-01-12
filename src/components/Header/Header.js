@@ -1,8 +1,29 @@
 import React from "react";
-import {withRouter} from "react-router-dom";
+
 import {ACCESS_TOKEN_NAME} from "../../constants/apiConstants";
 import {Button,Navbar} from "react-bootstrap";
 
+import {
+  useLocation,
+  useNavigate,
+  useParams
+} from "react-router-dom";
+
+function withRouter(Component) {
+  function ComponentWithRouterProp(props) {
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
+    return (
+      <Component
+        {...props}
+        router={{ location, navigate, params }}
+      />
+    );
+  }
+
+  return ComponentWithRouterProp;
+}
 function Header(props){
     function renderLogout(){
         if(
